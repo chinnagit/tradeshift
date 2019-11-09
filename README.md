@@ -24,6 +24,7 @@ or
 3. using docker
 
 a. build the image
+
 docker image build -t nodemanagerimage:1.0 .
 
 b. run the container
