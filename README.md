@@ -105,12 +105,19 @@ and childrens of the node.
   }
 ]
 
+3.c 
+
+Negative case try to fetch the node which not exist in the tree -- observe 404 error
+
+http://localhost:8080/node/root
+
 C -- change the parent of given node -- http://localhost:8080/node/changeParent/<node name>/<new parent name>
 
 The api design is not accurate -- just for the demo purpose I implemented using GET method
 that way we don't need to relay on rest tools, using browser we will be to demonstrate the 
 functionality. 
 
+1. 
 http://localhost:8080/node/changeParent/D/A
 
 Observe now the node D is children of A, removed from B.
@@ -155,3 +162,10 @@ Observe now the node D is children of A, removed from B.
     ]
   }
 ]
+
+2. try to change the parent which is not exist or try to assign the parent for the non existed node
+observe server error with proper message.
+
+3. Try to assign the it's own child as the parent -- observe the error.
+
+4. Try to assign the parent as the same current parent (i.e no change in parent and child ) observe nothing got changed.
