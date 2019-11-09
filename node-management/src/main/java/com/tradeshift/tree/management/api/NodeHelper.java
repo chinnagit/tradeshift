@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tradeshift.tree.management.model.ChangeParentException;
 import com.tradeshift.tree.management.model.Node;
+import com.tradeshift.tree.management.model.NotFoundException;
 /**
  * Helper class to 
  * 1. retrieve the descendants of given node.
@@ -73,7 +75,8 @@ public class NodeHelper {
 		}
 		Node searchNode = getNode(root, name);
 		if(searchNode == null) {
-			return descedants;
+//			return descedants;
+			throw new NotFoundException("Node not found");
 		}
 		return searchNode.getChildrens();
 	}
@@ -92,6 +95,9 @@ public class NodeHelper {
 		queue.offer(root);
 		
 		Node parentNode = getNode(root, parentName);
+		if(parentNode == null) {
+			throw new NotFoundException("Parent node "+parentName+" not found");
+		}
 		Node searchNode = null;
 		
 		while(!queue.isEmpty()) {
@@ -100,17 +106,27 @@ public class NodeHelper {
 				for(Node children : node.getChildrens()) {
 					if(children.getName().equals(name)) {
 						if(children.getParent().getName().equals(parentName)) {
-							// as the parent node and given input parent name is same, as there is no change no point in reshuffle the data.
-							break;
+							// as the parent node and given input parent name is same, as there is no change no point in re shuffle the data.
+//							break;
+							return getDescedents(null);
 						}
 						List<Node> childrens = node.getChildrens();
-						childrens.remove(children);
 						searchNode = children;
+						Node childNode = getNode(searchNode, parentName);
+						//verify is the request is asking to assign the node as child of it's own child node (i.e child is becoming parent of it's own parent hirerarchy) 
+						if(childNode != null) {
+							throw new ChangeParentException("Parent node "+name+" can not be assigned to it's own child " +parentName+" node");
+						}
+						childrens.remove(children);
 						break;
 					}
 					queue.offer(children);
 				}
 			}
+		}
+		
+		if(searchNode == null) {
+			throw new NotFoundException("Node "+name+" not found");
 		}
 		
 		if(parentNode != null && searchNode != null) {
