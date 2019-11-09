@@ -39,7 +39,7 @@ sample tree is hard coded in this form
       /   \
      A      B 
     /     /   \   \
-   C     D      E   F
+   C      D    E   F
    
    
 
