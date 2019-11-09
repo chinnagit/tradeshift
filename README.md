@@ -29,7 +29,7 @@ docker image build -t nodemanagerimage:1.0 .
 
 b. run the container
 
-docker container run --publish 8080:8080 --detach --name nodemanager nodemanagerimage:1.0 
+docker run -p 8080:8080 -t nodemanagerimage:1.0
 
 access the application using url -- http://localhost:8080/node/<node name>
 
