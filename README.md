@@ -31,7 +31,17 @@ b. run the container
 
 docker run -p 8080:8080 -t nodemanagerimage:1.0
 
-access the application using url -- http://localhost:8080/node/<node name>
+access the application using url -- http://localhost:8080/node/{nodename}
+
+sample tree is hard coded in this form
+
+      root
+      /   \
+     A      B 
+    /     /   \   \
+   C     D      E   F
+   
+   
 
 3.a. For the API --  get all descedants root node
 
