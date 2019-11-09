@@ -5,7 +5,7 @@ Requirements
 3. Ensure docker is installed.
 
 
-git clone
+git clone https://github.com/chinnagit/tradeshift
 
 cd node-manager.
 
